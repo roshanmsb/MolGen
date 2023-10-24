@@ -44,7 +44,7 @@ def main(args):
         eos_token_id="<eos>",
         lr=args.lr,
         weight_decay=args.weight_decay,
-        warmup_steps=args.warmup_steps,
+        max_lr=args.max_lr,
     )
 
     # Initialize trainer
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     parser.add_argument("--strategy", type=str, default="fsdp")
     parser.add_argument("--lr", type=float, default=5e-4)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
-    parser.add_argument("--warmup_steps", type=int, default=10000)
+    parser.add_argument("--max_lr", type=int, default=1e-1)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--preprocess_num_workers", type=int, default=20)
     parser.add_argument("--dataloader_num_workers", type=int, default=4)

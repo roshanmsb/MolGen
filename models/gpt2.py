@@ -1,10 +1,7 @@
 import pytorch_lightning as pl
 from torch.optim import AdamW
-from transformers import (
-    AutoConfig,
-    GPT2LMHeadModel,
-    get_linear_schedule_with_warmup,
-)
+from torch.optim.lr_scheduler import OneCycleLR
+from transformers import AutoConfig, GPT2LMHeadModel
 
 
 class GPT2MolGen(pl.LightningModule):
@@ -17,7 +14,7 @@ class GPT2MolGen(pl.LightningModule):
         eos_token_id,
         lr,
         weight_decay,
-        warmup_steps,
+        max_lr,
     ):
         super().__init__()
 
@@ -33,7 +30,7 @@ class GPT2MolGen(pl.LightningModule):
         self.net = GPT2LMHeadModel(config=config)
         self.lr = lr
         self.weight_decay = weight_decay
-        self.warmup_steps = warmup_steps
+        self.max_lr = max_lr
 
     def forward(self, x):
         return self.net(
@@ -66,9 +63,9 @@ class GPT2MolGen(pl.LightningModule):
             lr=self.lr,
             weight_decay=self.weight_decay,
         )
-        scheduler = get_linear_schedule_with_warmup(
+        scheduler = OneCycleLR(
             optimizer,
-            num_warmup_steps=self.warmup_steps,
-            num_training_steps=self.trainer.estimated_stepping_batches,
+            max_lr=self.max_lr,
+            total_steps=self.trainer.estimated_stepping_batches,
         )
         return [optimizer], [scheduler]
