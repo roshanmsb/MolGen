@@ -13,7 +13,8 @@ from pytorch_lightning.callbacks import (
 from models.data import MolGenDataModule
 from models.gpt2 import GPT2MolGen
 
-os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
+# Suppress warnings
+os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "true"
 # Set matmul precision
 torch.set_float32_matmul_precision("medium")
 
@@ -25,7 +26,7 @@ def main(args):
     # Initialize DataModule
     datamodule = MolGenDataModule(
         tokenizer_path=os.path.join(root, "tokenizers/BPE_pubchem_500.json"),
-        dataset_path=os.path.join(root, "pubchem/part-0000.snappy.parquet"),
+        dataset_path=os.path.join(root, "pubchem/*"),
         file_type="parquet",
         overwrite_cache=True,
         max_seq_length=max_seq_length,
@@ -72,9 +73,9 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--devices", type=int, default=4)
     parser.add_argument("--strategy", type=str, default="fsdp")
-    parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--weight_decay", type=float, default=0.01)
-    parser.add_argument("--warmup_steps", type=int, default=1000)
+    parser.add_argument("--lr", type=float, default=5e-4)
+    parser.add_argument("--weight_decay", type=float, default=1e-4)
+    parser.add_argument("--warmup_steps", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--preprocess_num_workers", type=int, default=20)
     parser.add_argument("--dataloader_num_workers", type=int, default=4)

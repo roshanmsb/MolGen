@@ -30,13 +30,13 @@ class GPT2MolGen(pl.LightningModule):
             bos_token_id=bos_token_id,
             eos_token_id=eos_token_id,
         )
-        self.model = GPT2LMHeadModel(config=config)
+        self.net = GPT2LMHeadModel(config=config)
         self.lr = lr
         self.weight_decay = weight_decay
         self.warmup_steps = warmup_steps
 
     def forward(self, x):
-        return self.model(
+        return self.net(
             input_ids=x["input_ids"],
             attention_mask=x["attention_mask"],
             labels=x["labels"],
@@ -45,7 +45,12 @@ class GPT2MolGen(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         loss = self(batch).loss
         self.log(
-            "train_loss", loss, on_epoch=True, on_step=True, sync_dist=True
+            "train_loss",
+            loss,
+            on_epoch=True,
+            on_step=True,
+            sync_dist=True,
+            prog_bar=True,
         )
         return loss
 
