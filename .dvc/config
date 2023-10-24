@@ -1,0 +1,4 @@
+[core]
+    remote = molgen
+['remote "molgen"']
+    url = gdrive://1GTpu14RAV-JzzcPzpGEDkH6eza5vNzde
