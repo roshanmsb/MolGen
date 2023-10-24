@@ -44,10 +44,9 @@ The project has the following files:
 
 To use the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/username/pretrain-gpt2-chem-smiles.git`
+1. Clone the repository: `git clone https://github.com/roshanmsb/MolGen.git`
 2. Install the dependencies: `pip install -r requirements.txt`
-3. Modify the configuration files in the `configs` directory to suit your needs.
-4. Run the training script: `python main.py`
+3. Run the training script: `python train.py`
 
 ## License
 
