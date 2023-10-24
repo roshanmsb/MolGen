@@ -1,0 +1,5 @@
+torch
+pytorch-lightning
+transformers
+hydra-core
+dvc

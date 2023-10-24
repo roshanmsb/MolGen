@@ -1,0 +1,4 @@
+# configs/data/chem_smiles.yaml
+data:
+  path: data/chem_smiles.txt
+  batch_size: 32

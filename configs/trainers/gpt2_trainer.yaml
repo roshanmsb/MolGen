@@ -1,0 +1,14 @@
+lr: 1e-4
+num_epochs: 10
+optimizer:
+  type: AdamW
+  params:
+    weight_decay: 0.01
+    betas: [0.9, 0.999]
+    eps: 1e-6
+scheduler:
+  type: LinearWarmupCosineAnnealingLR
+  params:
+    warmup_steps: 500
+    max_epochs: 10
+batch_size: 32
